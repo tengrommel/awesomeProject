@@ -22,3 +22,10 @@
 - channel的注意事项
     - channel是引用类型
     - channel必须初始化才能写入数据，即make后才能使用
+
+- 管道的关闭
+> chan关闭了可以读但不能写
+
+- channel的遍历
+    - 在遍历时，如果channel没有关闭，则会出现deadlock的错误
+    - 在遍历时，如果channel已经关闭，则会正常遍历数据，遍历完后，就会退出遍历
