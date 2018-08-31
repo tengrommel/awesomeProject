@@ -28,7 +28,7 @@ func readData(intChan chan int, exitChan chan bool) {
 
 func main() {
 	// 创建两个管道
-	intChan := make(chan int, 50)
+	intChan := make(chan int, 10)
 	exitChan := make(chan bool, 1)
 	go writeData(intChan)
 	go readData(intChan, exitChan)
