@@ -59,6 +59,13 @@ func login(userId int, userPwd string) (err error) {
 		fmt.Println("conn.Write(bytes) fail", err)
 		return
 	}
-	fmt.Println("客户端，发送消息的长度", len(data))
+	//fmt.Println("客户端，发送消息的长度", len(data))
+	// 发送消息
+	_, err = conn.Write(data)
+	if err != nil {
+		fmt.Println("conn.Write(bytes) fail", err)
+		return
+	}
+	// 这里还需要处理服务器端返回的消息.
 	return
 }

@@ -39,7 +39,7 @@ func main() {
 		fmt.Println("请输入用户的id号")
 		fmt.Scanf("%d\n", &userId)
 		fmt.Println("请输入用户的密码")
-		fmt.Scanf("%d\n", &userPwd)
+		fmt.Scanf("%s\n", &userPwd)
 		// 先把登陆的函数，写到另外一个文件，比如login
 		err := login(userId, userPwd)
 		if err != nil {
