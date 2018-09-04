@@ -41,12 +41,13 @@ func main() {
 		fmt.Println("请输入用户的密码")
 		fmt.Scanf("%s\n", &userPwd)
 		// 先把登陆的函数，写到另外一个文件，比如login
-		err := login(userId, userPwd)
-		if err != nil {
-			fmt.Println("登陆失败")
-		} else {
-			fmt.Println("登陆成功")
-		}
+		login(userId, userPwd)
+		//if err != nil {
+		//	fmt.Println("登陆失败")
+		//} else {
+		//	fmt.Println("登陆成功")
+		//}
+
 	} else if key == 2 {
 		fmt.Println("进行注册的逻辑")
 	}

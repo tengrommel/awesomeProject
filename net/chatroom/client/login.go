@@ -2,6 +2,7 @@ package main
 
 import (
 	"awesomeProject/net/chatroom/common/message"
+	"awesomeProject/net/chatroom/util"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -67,5 +68,17 @@ func login(userId int, userPwd string) (err error) {
 		return
 	}
 	// 这里还需要处理服务器端返回的消息.
+	mes, err = util.ReadPkg(conn) // mes就是
+	if err != nil {
+		fmt.Println("readPkg(conn) err=", err)
+	}
+	// 将mes的Data部分反序列化成LoginResMes
+	var loginResMes message.LoginResMes
+	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
+	if loginResMes.Code == 200 {
+		fmt.Println("登陆成功")
+	} else if loginResMes.Code == 500 {
+		fmt.Println(loginResMes.Error)
+	}
 	return
 }
