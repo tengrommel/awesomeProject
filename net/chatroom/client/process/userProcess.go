@@ -150,6 +150,10 @@ func (this *UserProcess) Login(userId int, userPwd string) (err error) {
 		// 可以显示当前在线用户列表，遍历loginResMes.UserId
 		fmt.Println("当前在线用户如下：")
 		for _, v := range loginResMes.UserIds {
+			// 如果我们要求不显示自己
+			if v == userId {
+				continue
+			}
 			fmt.Printf("用户id%v\t", v)
 		}
 		fmt.Println("\n\n")
