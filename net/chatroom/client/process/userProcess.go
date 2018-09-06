@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+	"os"
 )
 
 type UserProcess struct {
@@ -29,7 +30,7 @@ func (this *UserProcess) Register(userId int,
 	mes.Type = message.RegisterMesType
 	// 3.创建一个LoginMes 结构体
 	var registerMes message.RegisterMes
-	registerMes.User.User = userId
+	registerMes.User.UserId = userId
 	registerMes.User.UserPwd = userPwd
 	registerMes.User.UserName = userName
 	// 4、将registerMes序列化
@@ -65,10 +66,10 @@ func (this *UserProcess) Register(userId int,
 	err = json.Unmarshal([]byte(mes.Data), &registerResMes)
 	if registerResMes.Code == 200 {
 		fmt.Println("注册成功，你重新登录一把")
-		//os.Exit(0)
+		os.Exit(0)
 	} else {
 		fmt.Println(registerResMes.Error)
-		//os.Exit(0)
+		os.Exit(0)
 	}
 	return
 }

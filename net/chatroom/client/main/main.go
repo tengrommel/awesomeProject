@@ -38,12 +38,13 @@ func main() {
 			fmt.Println("注册用户")
 			fmt.Println("请输入用户id：")
 			fmt.Scanf("%d\n", &userId)
-			fmt.Println("请输入用户的密码id：")
+			fmt.Println("请输入用户的密码：")
 			fmt.Scanf("%s\n", &userPwd)
 			fmt.Println("请输入用户的名字：")
 			fmt.Scanf("%d\n", &userName)
 			// 2、调用UserProcess，完成注册的请求
 			up := &process.UserProcess{}
+			up.Register(userId, userPwd, userName)
 			//loop = false
 		case 3:
 			fmt.Println("退出系统")
