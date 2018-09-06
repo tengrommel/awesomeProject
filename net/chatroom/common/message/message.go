@@ -3,10 +3,18 @@ package message
 // 确定一些消息类型
 
 const (
-	LoginMesType       = "LoginMes"
-	LoginResMesType    = "LoginResMes"
-	RegisterMesType    = "RegisterMes"
-	RegisterResMesType = "RegisterResMes"
+	LoginMesType            = "LoginMes"
+	LoginResMesType         = "LoginResMes"
+	RegisterMesType         = "RegisterMes"
+	RegisterResMesType      = "RegisterResMes"
+	NotifyUserStatusMesType = "NotifyUserStatusMes"
+)
+
+// 这里我们定义几个用户状态的常量
+const (
+	UserOnline = iota
+	UserOffline
+	UserBusyStatus
 )
 
 type Message struct {
@@ -34,4 +42,10 @@ type RegisterMes struct {
 type RegisterResMes struct {
 	Code  int    `json:"code"`  // 返回状态码 400 表示该用户已经占用 200 表示注册成功
 	Error string `json:"error"` // 返回错误信息
+}
+
+//为了配合服务器端推送用户状态变化的消息
+type NotifyUserStatusMes struct {
+	UserId int `json:"userId"` // 用户id
+	Status int `json:"status"` // 用户的状态
 }
