@@ -12,6 +12,8 @@ import (
 type UserProcess struct {
 	// 字段？
 	Conn net.Conn
+	// 增加一个字段，表示该Conn是哪个用户的
+	UserId int
 }
 
 func (this *UserProcess) ServerProcessRegister(mes *message.Message) (err error) {
