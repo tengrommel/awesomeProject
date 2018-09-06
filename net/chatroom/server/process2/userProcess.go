@@ -98,6 +98,15 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		// 这里我们先测试成功！然后我们再根据返回具体错误信息
 	} else {
 		loginResMes.Code = 200
+		// 这里因为用户已经登录成功，我们就把该登录成功的用户放入到userMgr中
+		// 将登录成功的用户的userId赋给this
+		this.UserId = loginMes.UserId
+		userMgr.AddOnlineUser(this)
+		// 将当前在线用户的id放入到loginResMes.UsersId
+		// 遍历 userMgr.onlineUsers
+		for id, _ := range userMgr.onlineUsers {
+			loginResMes.UserIds = append(loginResMes.UserIds, id)
+		}
 		fmt.Println(user, "登录成功")
 	}
 	//// 如果用户的id=100，密码=123456，认为合法，否则不合法
