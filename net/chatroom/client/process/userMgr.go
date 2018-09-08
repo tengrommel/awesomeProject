@@ -1,12 +1,14 @@
 package process
 
 import (
+	"awesomeProject/net/chatroom/client/model"
 	"awesomeProject/net/chatroom/common/message"
 	"fmt"
 )
 
 // 客户端要维护的map
 var onlineUsers map[int]*message.User = make(map[int]*message.User, 10)
+var CurUser model.CurUser // 我们在用户登录成功后，完成对CurUser初始化
 
 // 显示当前在线的用户
 func outputOnlineUser() {

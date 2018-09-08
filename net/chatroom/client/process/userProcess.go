@@ -146,6 +146,11 @@ func (this *UserProcess) Login(userId int, userPwd string) (err error) {
 	var loginResMes message.LoginResMes
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 	if loginResMes.Code == 200 {
+		// 初始化CurUser
+		CurUser.Conn = conn
+		CurUser.UserId = userId
+		CurUser.UserStatus = message.UserOnline
+
 		//fmt.Println("登陆成功")
 		// 可以显示当前在线用户列表，遍历loginResMes.UserId
 		fmt.Println("当前在线用户如下：")
