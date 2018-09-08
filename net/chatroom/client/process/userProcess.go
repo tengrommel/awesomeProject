@@ -155,8 +155,14 @@ func (this *UserProcess) Login(userId int, userPwd string) (err error) {
 				continue
 			}
 			fmt.Printf("用户id%v\t", v)
+			// 完成 客户端的onlineUsers完成初始化
+			user := &message.User{
+				UserId:     v,
+				UserStatus: message.UserOnline,
+			}
+			onlineUsers[v] = user
 		}
-		fmt.Println("\n\n")
+		fmt.Print("\n\n")
 		// 这里我们还需要在客户端启动一个协程
 		// 该协程保持和服务器端的通讯，如果服务器有数据推送给客户端
 		// 则接收并显示在客户端的终端.

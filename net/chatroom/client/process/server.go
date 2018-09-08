@@ -2,6 +2,8 @@ package process
 
 import (
 	"awesomeProject/net/chatroom/client/utils"
+	"awesomeProject/net/chatroom/common/message"
+	"encoding/json"
 	"fmt"
 	"net"
 	"os"
@@ -46,6 +48,18 @@ func serverProcessMes(conn net.Conn) {
 			return
 		}
 		// 如果读取到消息，又是下一步处理逻辑
-		fmt.Printf("mes=%v\n", mes)
+		switch mes.Type {
+		case message.NotifyUserStatusMesType: // 有人上线了
+			// 1、取出.NotifyUserStatusMes
+			var notifyUsrStatusMes message.NotifyUserStatusMes
+			json.Unmarshal([]byte(mes.Data), &notifyUsrStatusMes)
+			// 2、把这个用户的信息，状态保存到客户map[int]User中
+			updateUserStatus(&notifyUsrStatusMes)
+			// 处理
+
+		default:
+			fmt.Println("服务器端返回了未知的消息类型")
+		}
+		//fmt.Printf("mes=%v\n", mes)
 	}
 }

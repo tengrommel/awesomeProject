@@ -10,17 +10,17 @@ const (
 	NotifyUserStatusMesType = "NotifyUserStatusMes"
 )
 
+type Message struct {
+	Type string `json:"type"` // 消息的类型
+	Data string `json:"data"` // 消息的类型
+}
+
 // 这里我们定义几个用户状态的常量
 const (
 	UserOnline = iota
 	UserOffline
 	UserBusyStatus
 )
-
-type Message struct {
-	Type string `json:"type"` // 消息的类型
-	Data string `json:"data"` // 消息的类型
-}
 
 // 定义两个消息...后面需要再增加
 type LoginMes struct {
@@ -44,8 +44,8 @@ type RegisterResMes struct {
 	Error string `json:"error"` // 返回错误信息
 }
 
-//为了配合服务器端推送用户状态变化的消息
+// 为了配合服务器端推送用户状态变化的消息
 type NotifyUserStatusMes struct {
-	UserId int `json:"userId"` // 用户id
+	UserId int `json:"userId"` // 用户的id
 	Status int `json:"status"` // 用户的状态
 }
