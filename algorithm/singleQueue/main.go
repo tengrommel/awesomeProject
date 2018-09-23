@@ -34,6 +34,17 @@ func (this *Queue) showQueue() {
 	}
 }
 
+// 从队列中取出数据
+func (this *Queue) GetQueue() (val int, err error) {
+	// 先判断队列是否为空
+	if this.rear == this.front { // 队空
+		return -1, errors.New("queue empty")
+	}
+	this.front++
+	val = this.array[this.front]
+	return
+}
+
 func main() {
 	// 先创建一个队列
 	queue := &Queue{
@@ -60,7 +71,12 @@ func main() {
 				fmt.Println(err.Error())
 			}
 		case "get":
-			fmt.Println("get")
+			val, err := queue.GetQueue()
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Println("从队列中取出了一个数=", val)
+			}
 		case "show":
 			queue.showQueue()
 		case "exit":
