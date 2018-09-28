@@ -110,3 +110,10 @@ select LENGTH(last_name) 字节长度, last_name, salary FROM employees ORDER BY
 
 - round四舍五入
 - ceil向上取整
+
+## 三、日期函数
+- now 返回当前系统日期+时间
+- curdate 返回当前日期
+- curtime 返回当前时间
+- str_to_date
+- format
