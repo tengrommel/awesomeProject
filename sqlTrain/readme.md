@@ -117,3 +117,12 @@ select LENGTH(last_name) 字节长度, last_name, salary FROM employees ORDER BY
 - curtime 返回当前时间
 - str_to_date
 - format
+
+## 四、流程控制
+
+- if函数： if else的效果
+- case函数：
+    - switch case 的效果
+    - case 要判断的字段或表达式
+
+   when 常量1 then要显示的值1或语句1；
