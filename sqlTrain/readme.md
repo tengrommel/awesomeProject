@@ -126,3 +126,13 @@ select LENGTH(last_name) 字节长度, last_name, salary FROM employees ORDER BY
     - case 要判断的字段或表达式
 
    when 常量1 then要显示的值1或语句1；
+## 分组函数
+分类
+> sum 求和、avg 平均值、max最大值、min最大值、count计算个数
+
+- 1、简单的使用
+>SELECT SUM(salary) from employees;
+
+- 2、参数支持哪些类型
+
+- 3、是否忽略NULL
