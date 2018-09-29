@@ -1,10 +1,11 @@
-package singleton
+package unique_counter
 
 import "testing"
 
 func TestGetInstance(t *testing.T) {
 	counter1 := GetInstance()
 	if counter1 == nil {
+		// Test of acceptance criteria 1 failed
 		t.Error("expected pointer to Singleton after calling GetInstance(), not nil")
 	}
 	currentCount := counter1.AddOne()
