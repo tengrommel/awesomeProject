@@ -136,3 +136,10 @@ select LENGTH(last_name) 字节长度, last_name, salary FROM employees ORDER BY
 - 2、参数支持哪些类型
 
 - 3、是否忽略NULL
+
+- 4、distinct去重
+
+- 5、count
+
+    - count(*)统计总行数
+    - count(1)
