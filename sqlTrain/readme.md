@@ -143,3 +143,53 @@ select LENGTH(last_name) 字节长度, last_name, salary FROM employees ORDER BY
 
     - count(*)统计总行数
     - count(1)
+
+## 链接查询
+>当我们查询的字段涉及到多个表
+
+按功能分类
+
+    - 内链接
+        - 等值链接
+        - 非等值链接
+        - 自链接
+    - 外链接
+        - 左外链接
+        - 右外链接
+        - 全外链接
+    - 交叉链接
+
+查询有奖金的员工名、部门名
+
+## 非等值连接
+
+## 自链接
+
+        select 查询列表
+        from 表1 别名 [链接类型]
+        join 表2 别名
+        on 链接条件
+        on 链接条件
+        where 筛选条件
+        group by 分组
+        having 筛选条件
+        order by 排序列表
+
+## 内连接
+
+    inner
+
+## 外链接
+> 外链接的查询结果为主表中的所有记录
+
+- 如果从表中没有和他匹配的，则显示null
+
+外链接查询结果=内连接+主表中有而从表没有的记录
+
+
+    左外 left 左边是主表
+    右外 right 右边是主表
+    全外 full
+
+## 交叉链接
+    cross join
