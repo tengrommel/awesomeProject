@@ -51,5 +51,22 @@ func main() {
 	for i, valNode := range sparseArr {
 		fmt.Printf("%d: %d %d %d\n", i, valNode.row, valNode.col, valNode.val)
 	}
+	// 先创建稀疏数组
+	var chessMap2 [11][11]int
 
+	// 遍历sparseArr 【遍历文件每一行】
+	for i, valNode := range sparseArr {
+		if i != 0 { // 跳过第一行记录值
+			chessMap2[valNode.row][valNode.col] = valNode.val
+		}
+	}
+
+	// 看看chessMap2是不是恢复了
+	fmt.Println("恢复后的原始数据...")
+	for _, v := range chessMap2 {
+		for _, v2 := range v {
+			fmt.Printf("%d\t", v2)
+		}
+		fmt.Println()
+	}
 }
