@@ -73,6 +73,64 @@ func ListHeroNode2(head *HeroNode) {
 	}
 }
 
+func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
+	// 思路
+	// 1、先找到适当的结点的位置
+	// 2、创建一个辅助结点[跑龙套，帮忙]
+	temp := head
+	flag := true
+	// 让插入结点的no，和temp的下一个结点的no比较
+	for {
+		if temp.next == nil { // 说明到链表的最后
+			break
+		} else if temp.next.no > newHeroNode.no {
+			// 说明newHeroNode 就应该插入到temp后面
+			break
+		} else if temp.next.no == newHeroNode.no {
+			// 说明我们的链表中已经有这个node，就不让插入
+			flag = false
+			break
+		}
+		temp = temp.next
+	}
+	if !flag {
+		fmt.Println("对不起，已经存在no= ", newHeroNode.no)
+		return
+	} else {
+		newHeroNode.next = temp.next
+		newHeroNode.pre = temp
+		if temp.next != nil {
+			temp.next.pre = newHeroNode
+		}
+		temp.next = newHeroNode
+	}
+}
+
+// 双向链表删除一个结点
+func DelHeroNode(head *HeroNode, id int) {
+	temp := head
+	flag := false
+	for {
+		if temp.next == nil {
+			break
+		} else if temp.next.no == id {
+			flag = true
+			break
+		}
+		temp = temp.next
+	}
+	if flag {
+		// 找到了
+		temp.next = temp.next.next
+		if temp.next != nil {
+			temp.next.pre = temp
+		}
+	} else {
+		fmt.Println("要删除的id不存砸")
+	}
+
+}
+
 func main() {
 	head := &HeroNode{}
 	hero1 := &HeroNode{
