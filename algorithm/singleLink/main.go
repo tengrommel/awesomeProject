@@ -47,7 +47,39 @@ func ListHeroNode(head *HeroNode) {
 			break
 		}
 	}
+}
 
+/**
+给链表插入一个结点
+编写第二种插入方法，根据no的编号从小到大插入...
+*/
+func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
+	// 思路
+	// 1、先找到适当的结点的位置
+	// 2、创建一个辅助结点[跑龙套，帮忙]
+	temp := head
+	flag := true
+	// 让插入结点的no，和temp的下一个结点的no比较
+	for {
+		if temp.next == nil { // 说明到链表的最后
+			break
+		} else if temp.next.no > newHeroNode.no {
+			// 说明newHeroNode 就应该插入到temp后面
+			break
+		} else if temp.no == newHeroNode.no {
+			// 说明我们的链表中已经有这个node，就不让插入
+			flag = false
+			break
+		}
+		temp = temp.next
+	}
+	if !flag {
+		fmt.Println("对不起，已经存在no= ", newHeroNode.no)
+		return
+	} else {
+		newHeroNode.next = temp.next
+		temp.next = newHeroNode
+	}
 }
 
 func main() {
@@ -64,9 +96,15 @@ func main() {
 		name:     "卢俊义",
 		nickname: "玉麒麟",
 	}
+	hero3 := &HeroNode{
+		no:       3,
+		name:     "林冲",
+		nickname: "豹子头",
+	}
 	// 3、加入
-	InsertHeroNode(head, hero1)
-	InsertHeroNode(head, hero2)
+	InsertHeroNode2(head, hero3)
+	InsertHeroNode2(head, hero1)
+	InsertHeroNode2(head, hero2)
 	// 4、显示
 	ListHeroNode(head)
 }
