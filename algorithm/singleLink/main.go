@@ -27,6 +27,28 @@ func InsertHeroNode(head *HeroNode, newHeroNode *HeroNode) {
 	temp.next = newHeroNode
 }
 
+// 删除一个结点
+func DelHeroNode(head *HeroNode, id int) {
+	temp := head
+	flag := false
+	for {
+		if temp.next == nil {
+			break
+		} else if temp.next.no == id {
+			flag = true
+			break
+		}
+		temp = temp.next
+	}
+	if flag {
+		// 找到了
+		temp.next = temp.next.next
+	} else {
+		fmt.Println("要删除的id不存砸")
+	}
+
+}
+
 // 显示链表的所有结点信息
 func ListHeroNode(head *HeroNode) {
 	// 1、先找到该链表的最后这个结点
@@ -101,16 +123,18 @@ func main() {
 		name:     "林冲",
 		nickname: "豹子头",
 	}
-	hero4 := &HeroNode{
-		no:       3,
-		name:     "吴用",
-		nickname: "智多星",
-	}
+	//hero4 := &HeroNode{
+	//	no:       3,
+	//	name:     "吴用",
+	//	nickname: "智多星",
+	//}
 	// 3、加入
 	InsertHeroNode2(head, hero3)
 	InsertHeroNode2(head, hero1)
 	InsertHeroNode2(head, hero2)
-	InsertHeroNode2(head, hero4)
+	//InsertHeroNode2(head, hero4)
 	// 4、显示
+	// 5、删除
+	DelHeroNode(head, 2)
 	ListHeroNode(head)
 }
