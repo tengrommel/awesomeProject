@@ -66,7 +66,7 @@ func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
 		} else if temp.next.no > newHeroNode.no {
 			// 说明newHeroNode 就应该插入到temp后面
 			break
-		} else if temp.no == newHeroNode.no {
+		} else if temp.next.no == newHeroNode.no {
 			// 说明我们的链表中已经有这个node，就不让插入
 			flag = false
 			break
@@ -101,10 +101,16 @@ func main() {
 		name:     "林冲",
 		nickname: "豹子头",
 	}
+	hero4 := &HeroNode{
+		no:       3,
+		name:     "吴用",
+		nickname: "智多星",
+	}
 	// 3、加入
 	InsertHeroNode2(head, hero3)
 	InsertHeroNode2(head, hero1)
 	InsertHeroNode2(head, hero2)
+	InsertHeroNode2(head, hero4)
 	// 4、显示
 	ListHeroNode(head)
 }
