@@ -31,6 +31,46 @@ func InsertCatNode(head *CatNode, newCatNode *CatNode) {
 	newCatNode.next = head
 }
 
+// 删除一只猫
+func DelCatNode(head *CatNode, id int) *CatNode {
+	temp := head
+	helper := head
+	if temp.next == nil {
+		fmt.Println("这是一个空的环形链表，不能删除")
+		return head
+	}
+	//如果只有一个结点
+	if temp.next == head { // 只有一个结点
+		temp.next = nil
+		return head
+	}
+	flag := true
+	for {
+		if temp.next == head {
+			break
+		}
+
+		if temp.no == id {
+			if temp == head {
+				head = head.next
+			}
+			// 找到了退出
+			helper.next = temp.next
+			fmt.Printf("猫猫=%d\n", id)
+			flag = false
+		}
+		temp = temp.next
+		helper = helper.next
+	}
+	if flag {
+		if temp.no == id {
+			helper.next = temp.next
+			fmt.Printf("猫猫=%d\n", id)
+		}
+	}
+	return head
+}
+
 //输出这个环形的链表
 func ListCircleLink(head *CatNode) {
 	fmt.Println("环形链表的具体情况如下")
