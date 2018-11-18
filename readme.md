@@ -46,3 +46,21 @@
 
 - redis
     -Redis连接池
+
+- What is message passing?
+> Strategies
+- interface
+- Channels
+
+- Composition
+   - Inheritance
+   > Behavior reuse strategy where a type is based upon another type,
+   allowing it to inherit functionality from the base type.
+   - Composition
+   > Behavior reuse strategy where a type contains objects that have desired functionality.
+   The type delegates calls to those objects to use their behaviors.
+
+- Polymorphism
+> The ability to transparently substitute a family of types that implement
+a common set of behaviors.
+
