@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/mitchellh/mapstructure"
 	"go.planetmeican.com/planet/dynamodbdao"
 	"reflect"
 )
@@ -15,7 +15,7 @@ type JobA struct {
 	ThisId  string
 	OkId    string
 	Name    string
-	Address []byte
+	Address Address
 }
 
 type Address struct {
@@ -29,17 +29,17 @@ func (j *JobA) GetKey() string {
 var TableJobDescription = dynamodb.TableDescription{
 	AttributeDefinitions: []*dynamodb.AttributeDefinition{
 		{
-			AttributeName: aws.String("ThisId"),
+			AttributeName: aws.String("ReportUUID"),
 			AttributeType: aws.String("S"),
 		},
 	},
 	KeySchema: []*dynamodb.KeySchemaElement{
 		{
-			AttributeName: aws.String("ThisId"),
+			AttributeName: aws.String("ReportUUID"),
 			KeyType:       aws.String("HASH"),
 		},
 	},
-	TableName: aws.String("jobB"),
+	TableName: aws.String("Task"),
 }
 
 var createTable = dynamodb.CreateTableInput{
@@ -55,7 +55,7 @@ var createTable = dynamodb.CreateTableInput{
 func main() {
 	theCredential := credentials.NewStaticCredentials("222", "222", "")
 	config := &aws.Config{
-		Region:      aws.String("us-west-2"),
+		Region:      aws.String("cn-north-1"),
 		Endpoint:    aws.String("http://localhost:8000"),
 		Credentials: theCredential,
 	}
@@ -66,8 +66,7 @@ func main() {
 		panic(err)
 	}
 	address := Address{A: "d"}
-	jsonAddress, _ := json.Marshal(address)
-	err = genericDao.Put(&JobA{ThisId: "69d6190d-ec16-4dc5-b296-d021e4bbe805", OkId: "fuck", Address: jsonAddress})
+	err = genericDao.Put(&JobA{ThisId: "69d6190d-ec16-4dc5-b296-d021e4bbe805", OkId: "fuck", Address: address})
 	if err != nil {
 		panic(err)
 	}
@@ -75,8 +74,7 @@ func main() {
 	err = genericDao.Get("69d6190d-ec16-4dc5-b296-d021e4bbe805", job)
 	fmt.Println(reflect.TypeOf(job))
 	fmt.Println(reflect.TypeOf(job.Address))
-	aa := &Address{}
-	err = json.Unmarshal(job.Address, aa)
-	fmt.Println(err)
-	fmt.Println(aa.A)
+	a := Address{}
+	err = mapstructure.Decode(&job.Address, &a)
+	fmt.Println(a.A)
 }
