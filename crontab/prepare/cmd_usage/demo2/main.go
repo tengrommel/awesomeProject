@@ -12,7 +12,7 @@ var (
 )
 
 func main() {
-	cmd = exec.Command("/bin/bash", "-c", "sleep 5;ls -l")
+	cmd = exec.Command("/bin/bash", "-c", "sleep 5;ls -l;sleep 1; echo hello")
 	if output, err = cmd.CombinedOutput(); err != nil {
 		fmt.Println(err)
 		return
