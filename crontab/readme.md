@@ -41,6 +41,18 @@
     - 调度多个cron任务
 
 # etcd协调服务
+    - etcd功能介绍
+       - 将数据存储在集群中的高可用K-V存储
+       - 允许应用实时监听存储中的K-V的变化
+       - 能够容忍单点故障，能够应对网络分区
+    - etcd与Raft的关系
+       - Raft是强一致的集群日志同步算法
+       - etcd是一个分布式KV存储
+       - etcd利用raft算法在集群中同步key-value
+       - Raft日志概念
+         - replication：日志在Leader生成，向follower复制，达到各个结点的日志序列最终一致
+         - term:任期，重新选举产生的leader，其term单调递增
+         - log index：日志行在日志序列的下标
 
 # mongodb分布式存储
 
