@@ -55,6 +55,7 @@
          - log index：日志行在日志序列的下标
 
 # mongodb分布式存储
+    - 文档数据库
 
 # 分布式crontab架构
 
