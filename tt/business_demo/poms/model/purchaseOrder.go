@@ -63,11 +63,25 @@ func getNextDetailId() int {
 }
 
 func init() {
+	receivers := GetReceivers()
+	vendors := GetVendors()
+	var receiver *Receiver
+	if len(receivers) >= 1 {
+		receiver = receivers[1]
+	} else {
+		receiver = &Receiver{}
+	}
+	var vendor *Vendor
+	if len(vendors) >= 2 {
+		vendor = vendors[2]
+	} else {
+		vendor = &Vendor{}
+	}
 	orders = []*PurchaseOrder{
 		{
 			ID:       getNextOrderId(),
-			Receiver: GetReceivers()[1],
-			Vendor:   GetVendors()[2],
+			Receiver: receiver,
+			Vendor:   vendor,
 			Status:   "APPROVED",
 			Currency: GetCurrencies()[1],
 			Purpose:  "Replace leaking valve",

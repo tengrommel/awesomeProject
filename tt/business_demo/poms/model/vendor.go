@@ -18,7 +18,10 @@ type Vendor struct {
 
 func GetVendors() []*Vendor {
 	var result []*Vendor
-	resp, _ := http.Get("http://localhost:4000/api/vendors?type=manufacturing")
+	resp, err := http.Get("http://localhost:4000/api/vendors?type=manufacturing")
+	if err != nil {
+		return result
+	}
 	data := make([]byte, resp.ContentLength)
 	resp.Body.Read(data)
 	json.Unmarshal(data, &result)

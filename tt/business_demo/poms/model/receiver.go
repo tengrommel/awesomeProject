@@ -19,7 +19,10 @@ type ReceiverDto struct {
 
 func GetReceivers() []*Receiver {
 	var result []*Receiver
-	resp, _ := http.Get("http://localhost:5000/api/orgUnits?type=all")
+	resp, err := http.Get("http://localhost:5000/api/orgUnits?type=all")
+	if err != nil {
+		return result
+	}
 	data := make([]byte, resp.ContentLength)
 	resp.Body.Read(data)
 	var receiverDtos []*ReceiverDto
