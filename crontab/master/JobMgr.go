@@ -1,7 +1,7 @@
 package master
 
 import (
-	"awesomeProject/crontab/master/common"
+	"awesomeProject/crontab/common"
 	"context"
 	"encoding/json"
 	"go.etcd.io/etcd/clientv3"

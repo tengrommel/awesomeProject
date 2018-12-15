@@ -1,7 +1,7 @@
 package master
 
 import (
-	"awesomeProject/crontab/master/common"
+	"awesomeProject/crontab/common"
 	"encoding/json"
 	"net"
 	"net/http"
