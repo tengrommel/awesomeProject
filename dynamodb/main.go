@@ -6,25 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"github.com/mitchellh/mapstructure"
-	"go.planetmeican.com/planet/dynamodbdao"
-	"reflect"
 )
-
-type JobA struct {
-	ThisId  string
-	OkId    string
-	Name    string
-	Address Address
-}
-
-type Address struct {
-	A string
-}
-
-func (j *JobA) GetKey() string {
-	return j.OkId
-}
 
 var TableJobDescription = dynamodb.TableDescription{
 	AttributeDefinitions: []*dynamodb.AttributeDefinition{
@@ -39,7 +21,7 @@ var TableJobDescription = dynamodb.TableDescription{
 			KeyType:       aws.String("HASH"),
 		},
 	},
-	TableName: aws.String("Task"),
+	TableName: aws.String("Task0"),
 }
 
 var createTable = dynamodb.CreateTableInput{
@@ -61,20 +43,27 @@ func main() {
 	}
 	sess := session.Must(session.NewSession(config))
 	svc := dynamodb.New(sess)
-	genericDao, err := dynamodbdao.New(svc, "jobB")
+	result, err := svc.CreateTable(&createTable)
 	if err != nil {
-		panic(err)
+		fmt.Println(err.Error())
+		return
 	}
-	address := Address{A: "d"}
-	err = genericDao.Put(&JobA{ThisId: "69d6190d-ec16-4dc5-b296-d021e4bbe805", OkId: "fuck", Address: address})
-	if err != nil {
-		panic(err)
-	}
-	job := &JobA{}
-	err = genericDao.Get("69d6190d-ec16-4dc5-b296-d021e4bbe805", job)
-	fmt.Println(reflect.TypeOf(job))
-	fmt.Println(reflect.TypeOf(job.Address))
-	a := Address{}
-	err = mapstructure.Decode(&job.Address, &a)
-	fmt.Println(a.A)
+
+	fmt.Println(result)
+	//genericDao, err := dynamodbdao.New(svc, "jobB")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//address := Address{A: "d"}
+	//err = genericDao.Put(&JobA{ThisId: "69d6190d-ec16-4dc5-b296-d021e4bbe805", OkId: "fuck", Address: address})
+	//if err != nil {
+	//	panic(err)
+	//}
+	//job := &JobA{}
+	//err = genericDao.Get("69d6190d-ec16-4dc5-b296-d021e4bbe805", job)
+	//fmt.Println(reflect.TypeOf(job))
+	//fmt.Println(reflect.TypeOf(job.Address))
+	//a := Address{}
+	//err = mapstructure.Decode(&job.Address, &a)
+	//fmt.Println(a.A)
 }

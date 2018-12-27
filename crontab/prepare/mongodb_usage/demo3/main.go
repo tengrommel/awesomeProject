@@ -43,7 +43,7 @@ func main() {
 		return
 	}
 	database = client.Database("cron")
-	collection = database.Collection("log")
+	collection = database.Collection("log-test")
 
 	cond = &FindByJobName{JobName: "job10"}
 	findopt := options.FindOptions{}

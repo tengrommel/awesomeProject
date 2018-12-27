@@ -39,7 +39,7 @@ func main() {
 		return
 	}
 	database = client.Database("cron")
-	collection = database.Collection("log")
+	collection = database.Collection("log-test")
 	record = &LogRecord{
 		JobName:   "job10",
 		Command:   "echo hello",

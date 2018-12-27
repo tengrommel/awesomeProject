@@ -4,12 +4,18 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.planetmeican.com/planet/go-tool/httputil"
+	"go.planetmeican.com/titan/log"
+	"go.planetmeican.com/titan/logging"
 )
 
 type JSONResponse struct {
 	ResultCode        string      `json:"resultCode"`
 	ResultDescription string      `json:"resultDescription"`
 	Data              interface{} `json:"data"`
+}
+
+func init() {
+	logging.Init()
 }
 
 func main() {
@@ -35,6 +41,7 @@ func main() {
 			ResultCode: httputil.OK,
 		})
 	})
+	log.Infof("ok")
 	err := r.Run(":9999") // listen and serve on 0.0.0.0:8080
 	panic(err)
 }
