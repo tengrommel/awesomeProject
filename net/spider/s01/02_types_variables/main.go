@@ -13,4 +13,5 @@ func main() {
 	k2 = uint16(k1)
 	fmt.Printf("%d - %T\n", k2, k2)
 	fmt.Println(uint64(321325 * 424521))
+	// compiler error - overflow
 }
