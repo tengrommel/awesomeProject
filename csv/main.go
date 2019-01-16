@@ -45,6 +45,4 @@ func main() {
 	m := MonthlyExportByCityIdResultRow{
 		CorpId: "1",
 	}
-	list, _ := CreateHeaderStringSlice(m)
-	fmt.Println(list)
 }
