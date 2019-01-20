@@ -6,7 +6,7 @@ func TestGetInstance(t *testing.T) {
 	counter1 := GetInstance()
 	if counter1 == nil {
 		// Test 1 failed
-		t.Error("A new connection object must have been mad")
+		t.Error("A new connection objects must have been mad")
 	}
 	expectedCounter := counter1
 	currentCount := counter1.AddOne()
