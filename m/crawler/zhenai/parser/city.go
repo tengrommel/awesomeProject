@@ -5,17 +5,17 @@ import (
 	"regexp"
 )
 
-const cityListRe = ``
+const cityRe = ``
 
-func ParseCityList(contents []byte) engine.ParseResult {
-	re := regexp.MustCompile(cityListRe)
+func ParseCity(contents []byte) engine.ParseResult {
+	re := regexp.MustCompile(cityRe)
 	matches := re.FindAllSubmatch(contents, -1)
 	result := engine.ParseResult{}
 	for _, m := range matches {
 		result.Items = append(result.Items, string(m[2]))
 		result.Requests = append(result.Requests, engine.Request{
-			Url:        "City" + string(m[1]),
-			ParserFunc: ParseCity,
+			Url:        "User" + string(m[1]),
+			ParserFunc: engine.NilParser,
 		})
 	}
 	return result
