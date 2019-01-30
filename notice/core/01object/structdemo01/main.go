@@ -8,6 +8,7 @@ type Cat struct {
 	Age   int
 	Color string
 	Hobby string
+	Score [3]int
 }
 
 func main() {
