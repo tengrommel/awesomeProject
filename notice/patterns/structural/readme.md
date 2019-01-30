@@ -11,3 +11,10 @@ The Composite design pattern favors composition(commonly defined as a has a rela
 ## Adapter design pattern
 
 - Using an incompatible interface with an Adapter object
+
+## Bridge design pattern
+
+> It decouples an abstraction from its implementation so that the two can vary independently.
+
+This cryptic explanation just means that you could even decouple the most basic form of functionality:
+
