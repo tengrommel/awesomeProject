@@ -7,3 +7,7 @@ The Go language,by nature,encourages use of composition almost exlusively by its
 ## Composite design pattern
 
 The Composite design pattern favors composition(commonly defined as a has a relationship) over inheritance(an is a relationship).
+
+## Adapter design pattern
+
+- Using an incompatible interface with an Adapter object
