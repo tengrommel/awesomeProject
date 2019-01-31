@@ -18,3 +18,6 @@ The Composite design pattern favors composition(commonly defined as a has a rela
 
 This cryptic explanation just means that you could even decouple the most basic form of functionality:
 
+## Proxy design pattern
+
+> The Proxy pattern usually wraps an object to hide some of its characteristics.
