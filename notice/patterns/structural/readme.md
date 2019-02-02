@@ -21,3 +21,8 @@ This cryptic explanation just means that you could even decouple the most basic 
 ## Proxy design pattern
 
 > The Proxy pattern usually wraps an object to hide some of its characteristics.
+
+## Decorator design pattern
+
+> A different field where the Decorator is very powerful may not be so obvious though it reveal itself
+when creating types with lots of features based on user inputs,preferences,or similar inputs.
