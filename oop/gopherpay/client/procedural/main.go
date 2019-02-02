@@ -23,7 +23,7 @@ func main() {
 	fmt.Println("Paying with credit")
 	fmt.Printf("Initial balance: $%.2f\n", credit.AvailableCredit)
 	procedural.PayWithCredit(credit, amount)
-	fmt.Printf("Balance now: $%.2f\n", credit.AvailableCredit)
+	fmt.Printf("balance now: $%.2f\n", credit.AvailableCredit)
 	fmt.Printf(strings.Repeat("*", 10) + "\n\n")
 
 	checking := &procedural.CheckingAccount{
@@ -35,7 +35,7 @@ func main() {
 	fmt.Println("Paying with check")
 	fmt.Printf("Initial balance: $%.2f\n", checking.Balance)
 	procedural.PayWithCheck(checking, amount)
-	fmt.Printf("Balance now: $%.2f\n", checking.Balance)
+	fmt.Printf("balance now: $%.2f\n", checking.Balance)
 
 	fmt.Println("Hmm, not enough in the account. We can fix that!")
 	fmt.Println("Changing account balance")
@@ -44,6 +44,6 @@ func main() {
 	fmt.Println("Paying with check")
 	fmt.Printf("Initial balance: $%.2f\n", checking.Balance)
 	procedural.PayWithCheck(checking, amount)
-	fmt.Printf("Balance now: $%.2f\n", checking.Balance)
+	fmt.Printf("balance now: $%.2f\n", checking.Balance)
 	fmt.Printf(strings.Repeat("*", 10) + "\n\n")
 }
