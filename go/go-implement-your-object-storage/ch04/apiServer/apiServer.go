@@ -2,9 +2,9 @@ package main
 
 import (
 	"./heartbeat"
+	"./locate"
+	"./objects"
 	"./versions"
-	"awesomeProject/go/go-implement-your-object-storage/ch04/apiServer/locate"
-	"awesomeProject/go/go-implement-your-object-storage/ch04/apiServer/objects"
 	"log"
 	"net/http"
 	"os"
