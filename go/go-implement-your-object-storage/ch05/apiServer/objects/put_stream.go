@@ -2,14 +2,14 @@ package objects
 
 import (
 	"../heartbeat"
-	"awesomeProject/go/go-implement-your-object-storage/lib/objectstream"
+	"awesomeProject/go/go-implement-your-object-storage/lib/rs"
 	"fmt"
 )
 
-func putStream(hash string, size int64) (*objectstream.TempPutStream, error) {
-	server := heartbeat.ChooseRandomDataServer()
-	if server == "" {
-		return nil, fmt.Errorf("cannot find any dataServer")
+func putStream(hash string, size int64) (*rs.RSPutStream, error) {
+	server := heartbeat.ChooseRandomDataServers(rs.ALL_SHARDS, nil)
+	if len(server) != rs.ALL_SHARDS {
+		return nil, fmt.Errorf("cannot find enough dataServer")
 	}
-	return objectstream.NewTempPutStream(server, hash, size)
+	return rs.NewRSPutStream(server, hash, size)
 }
