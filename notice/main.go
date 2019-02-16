@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go.planetmeican.com/planet/go-tool/httputil"
 )
 
 type JSONResponse struct {
@@ -32,7 +31,7 @@ func main() {
 		}
 		fmt.Println(f)
 		context.JSON(200, JSONResponse{
-			ResultCode: httputil.OK,
+			ResultCode: "OK",
 		})
 	})
 	err := r.Run(":9999") // listen and serve on 0.0.0.0:8080
