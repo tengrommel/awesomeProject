@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
 	"awesomeProject/notice/go_web/models"
 	"awesomeProject/notice/go_web/routes"
 	"awesomeProject/notice/go_web/utils"
+	"fmt"
+	"log"
+	"net/http"
 )
 
 const PORT = ":8080"
