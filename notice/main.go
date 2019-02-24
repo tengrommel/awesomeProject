@@ -21,15 +21,21 @@ func main() {
 	r.POST("/ok", func(context *gin.Context) {
 		fmt.Println(context.Request)
 		f := struct {
+			Status      string `json:"status"`
 			ClientUUID  string `json:"clientUUID"`
 			ReportUUID  string `json:"reportUUID"`
 			DownloadUrl string `json:"downloadUrl"`
+			ErrorDetail []byte `json:"errorDetail"`
 		}{}
 		if err := context.ShouldBindJSON(&f); err != nil {
 			context.JSON(200, err.Error())
 			return
 		}
 		fmt.Println(f)
+		fmt.Println(f.DownloadUrl)
+		fmt.Println("+++++++++++++")
+		fmt.Println(string(f.ErrorDetail))
+		fmt.Println("-------------")
 		context.JSON(200, JSONResponse{
 			ResultCode: "OK",
 		})
