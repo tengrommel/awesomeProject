@@ -18,6 +18,7 @@ type DatabaseItem struct {
 }
 
 var items = []DatabaseItem{
+	{"a/b/o", 0},
 	{"a/b/c", 1},
 	{"a/b/e", 2},
 	{"a/d/f", 3},
