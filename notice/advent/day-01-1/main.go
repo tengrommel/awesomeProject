@@ -1,34 +1,48 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
+	"strings"
 )
 
+type Node struct {
+	NodeMap map[string]Node
+	Id      int64
+}
+
+type DatabaseItem struct {
+	Name string
+	Id   int64
+}
+
+var items = []DatabaseItem{
+	{"a/b/c", 1},
+	{"a/b/e", 2},
+	{"a/d/f", 3},
+	{"a", 4},
+}
+
 func main() {
-	f, err := os.Open("input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-	sum := 0
-	seen := map[int]bool{0: true}
-	s := bufio.NewScanner(f)
-	for s.Scan() {
-		var n int
-		_, err := fmt.Sscanf(s.Text(), "%d", &n)
-		if err != nil {
-			log.Fatalf("could not read %s: %v", s.Text(), err)
+	var node = Node{}
+	for i := range items {
+		currentNode := &node
+		itemStringList := strings.Split(items[i].Name, "/")
+		for index, item := range itemStringList {
+			_, ok := currentNode.NodeMap[item]
+			if !ok {
+				currentNode.NodeMap = make(map[string]Node)
+				currentNode.NodeMap[item] = Node{}
+			}
+			if index == len(itemStringList)-1 {
+				currentNode.NodeMap[item] = Node{
+					NodeMap: currentNode.NodeMap,
+					Id:      items[i].Id,
+				}
+			} else {
+				*currentNode = currentNode.NodeMap[item]
+			}
 		}
-		sum += n
-		if seen[sum] {
-			fmt.Println(sum)
-		}
-		seen[sum] = true
 	}
-	if err := s.Err(); err != nil {
-		log.Fatal(err)
-	}
+	fmt.Println(node)
+	fmt.Println("ok")
 }
