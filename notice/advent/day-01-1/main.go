@@ -1,13 +1,15 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 )
 
 type Node struct {
-	NodeMap map[string]Node
-	Id      int64
+	NodeMap  map[string]*Node
+	Id       int64
+	FullName string
 }
 
 type DatabaseItem struct {
@@ -20,6 +22,7 @@ var items = []DatabaseItem{
 	{"a/b/e", 2},
 	{"a/d/f", 3},
 	{"a", 4},
+	{"f", 5},
 }
 
 func main() {
@@ -30,19 +33,28 @@ func main() {
 		for index, item := range itemStringList {
 			_, ok := currentNode.NodeMap[item]
 			if !ok {
-				currentNode.NodeMap = make(map[string]Node)
-				currentNode.NodeMap[item] = Node{}
+				if currentNode.NodeMap == nil {
+					currentNode.NodeMap = make(map[string]*Node)
+				}
+				currentNode.NodeMap[item] = &Node{}
 			}
 			if index == len(itemStringList)-1 {
-				currentNode.NodeMap[item] = Node{
-					NodeMap: currentNode.NodeMap,
-					Id:      items[i].Id,
+				if currentNode.NodeMap == nil {
+					currentNode.NodeMap[item] = &Node{
+						Id:       items[i].Id,
+						FullName: items[i].Name,
+					}
+				} else {
+					currentNode.NodeMap[item].Id = items[i].Id
+					currentNode.NodeMap[item].FullName = items[i].Name
 				}
 			} else {
-				*currentNode = currentNode.NodeMap[item]
+				currentNode = currentNode.NodeMap[item]
 			}
 		}
 	}
-	fmt.Println(node)
+	//fmt.Println(node)
+	bt, _ := json.Marshal(node)
+	fmt.Println(string(bt))
 	fmt.Println("ok")
 }
