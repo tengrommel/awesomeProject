@@ -54,7 +54,6 @@ func main() {
 			}
 		}
 	}
-	//fmt.Println(node)
 	bt, _ := json.Marshal(node)
 	fmt.Println(string(bt))
 	fmt.Println("ok")
