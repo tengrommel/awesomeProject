@@ -3,13 +3,40 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"regexp"
 	"strconv"
+	"sync"
 	"time"
 )
 
+var (
+	chSem      = make(chan int, 100)
+	downloadWG sync.WaitGroup
+	randomMT   sync.Mutex
+)
+
 const reImg = `<img[\s\S]+?src="(http[\s\S]+?)"`
+
+// 生成[start, end)随机数
+func GetRandomInt(start, end int) int {
+	randomMT.Lock()
+	defer randomMT.Unlock()
+	<-time.After(1 * time.Nanosecond)
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	ret := start + r.Intn(end-start)
+	return ret
+}
+
+/*
+生成时间戳_随机数文件名
+*/
+func GetRandomName() string {
+	timestamp := strconv.Itoa(int(time.Now().UnixNano()))
+	randomNum := strconv.Itoa(GetRandomInt(1000, 10000))
+	return timestamp + randomNum
+}
 
 // 获得页面上所有的图片连接
 func spiderImage(url string) []string {
@@ -34,21 +61,36 @@ func GetHtml(url string) string {
 }
 
 func DownloadImg(url string) {
-	resp, _ := http.Get(url)
+	fmt.Println("DownloadImg...")
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
 	defer resp.Body.Close()
 	imgBytes, _ := ioutil.ReadAll(resp.Body)
-	err := ioutil.WriteFile(fmt.Sprintf("d/%v", strconv.Itoa(int(time.Now().UnixNano()))+".jpg"), imgBytes, 0644)
-	if err != nil {
+	err = ioutil.WriteFile(fmt.Sprintf("/home/teng/go/src/awesomeProject/notice/advent/%v", GetRandomName()+".jpg"), imgBytes, 0644)
+	if err == nil {
 		fmt.Println("下载成功！")
 	} else {
-		fmt.Println("下载失败：", err.Error())
+		fmt.Println("下载失败：")
 	}
+}
+
+func DownloadImgAsync(url string) {
+	downloadWG.Add(1)
+	go func() {
+		chSem <- 123
+		DownloadImg(url)
+		<-chSem
+		downloadWG.Done()
+	}()
+	downloadWG.Wait()
 }
 
 func main() {
 	imgUrls := spiderImage("http://www.163.com")
 	for _, imgUrl := range imgUrls {
 		fmt.Println(imgUrl)
-		DownloadImg(imgUrl)
+		DownloadImgAsync(imgUrl)
 	}
 }
