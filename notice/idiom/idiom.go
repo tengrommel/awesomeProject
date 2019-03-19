@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 /*
@@ -22,21 +23,47 @@ type Idiom struct {
 	Derivation string `json:"derivation"`
 }
 
+var idiomsMap = make(map[string]Idiom)
+
 func main() {
 	jsonStr, _ := GetJson("http://route.showapi.com/1196-1?showapi_appid=19988&showapi_sign=968ad4fcc2144e41b5c366838d1b0ec4&keyword=%E9%91%B2?page=1&rows=10")
-	fmt.Println(jsonStr)
+	//fmt.Println(jsonStr)
+
+	// 将json数据转换为go数据
+	ParseJsonToIdioms(jsonStr, idiomsMap)
+	fmt.Println(idiomsMap)
+	// 本地持久化
+	err := WriteIdiomsToFile("./idiom.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+// 将数据写出到指定文件
+func WriteIdiomsToFile(path string) error {
+	dstFile, _ := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
+	encoder := json.NewEncoder(dstFile)
+	err := encoder.Encode(idiomsMap)
+	if err != nil {
+		fmt.Println("写出json文件失败，err=", err)
+		return err
+	}
+	fmt.Println("写出json文件成功")
+	return nil
+}
+
+// 解析json为成语的map
+func ParseJsonToIdioms(jsonStr string, idiomsMap map[string]Idiom) {
 	var tempData = make(map[string]interface{})
 	json.Unmarshal([]byte(jsonStr), &tempData)
-	fmt.Println(tempData)
+	//fmt.Println(tempData)
 	dataSlice := tempData["showapi_res_body"].(map[string]interface{})["data"].([]interface{})
-	fmt.Printf("type=%T, value=%v", dataSlice, dataSlice)
-	idiomsMap := make(map[string]Idiom)
+	//fmt.Printf("type=%T, value=%v", dataSlice, dataSlice)
 	for i := range dataSlice {
 		title := dataSlice[i].(map[string]interface{})["title"].(string)
 		idiom := Idiom{Title: title}
 		idiomsMap[title] = idiom
 	}
-	fmt.Println(idiomsMap)
 }
 
 func GetJson(url string) (jsonStr string, err error) {
