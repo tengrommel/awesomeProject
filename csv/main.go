@@ -45,4 +45,5 @@ func main() {
 	m := MonthlyExportByCityIdResultRow{
 		CorpId: "1",
 	}
+	fmt.Println(m)
 }
