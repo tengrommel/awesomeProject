@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // 定义emp
 type Emp struct {
 	Id   int
@@ -47,6 +49,24 @@ type HashTable struct {
 	LinkArr [7]EmpLink
 }
 
+func (e *EmpLink) ShowLink(no int) {
+	if e.Head == nil {
+		fmt.Printf("链表%d 为空\n", no)
+		return
+	}
+	// 变量当前的链表，并显示数据
+	cur := e.Head // 辅助的指针
+	for {
+		if cur != nil {
+			fmt.Printf("链表%d 雇员id=%d 名字=%s ->", no, cur.Id, cur.Name)
+			cur = cur.Next
+		} else {
+			break
+		}
+	}
+	fmt.Println() // 换行处理
+}
+
 // 给HashTable 编写Insert雇员的方法。
 func (h *HashTable) Insert(emp *Emp) {
 	// 使用散列函数确定将该雇员添加到哪个链表
@@ -55,11 +75,46 @@ func (h *HashTable) Insert(emp *Emp) {
 	h.LinkArr[linkNo].Insert(emp)
 }
 
+// 编写方法，显式hashtable所有的雇员
+func (h *HashTable) ShowAll() {
+	for i := 0; i < len(h.LinkArr); i++ {
+		h.LinkArr[i].ShowLink(i)
+	}
+}
+
 // 编写一个散列方法
 func (h *HashTable) HashFun(id int) int {
 	return id % 7 // 得到一个值，就是对于链表的下标
 }
 
 func main() {
-
+	key := ""
+	id := 0
+	name := ""
+	var hashtable HashTable
+	for {
+		fmt.Println("=============雇员系统菜单=============")
+		fmt.Println("input 表示添加雇员")
+		fmt.Println("show 表示显示雇员")
+		fmt.Println("find 表示查找雇员")
+		fmt.Println("exit 表示退出系统")
+		fmt.Scanln(&key)
+		switch key {
+		case "input":
+			fmt.Println("输入雇员id")
+			fmt.Scanln(&id)
+			fmt.Println("输入雇员name")
+			fmt.Scanln(&name)
+			emp := &Emp{
+				Id:   id,
+				Name: name,
+			}
+			hashtable.Insert(emp)
+		case "show":
+			hashtable.ShowAll()
+		case "exit":
+		default:
+			fmt.Println("输入错误")
+		}
+	}
 }
