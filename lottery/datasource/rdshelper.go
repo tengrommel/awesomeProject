@@ -1,6 +1,7 @@
 package datasource
 
 import (
+	"../conf"
 	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"log"
@@ -9,7 +10,7 @@ import (
 )
 
 var rdsLock sync.Mutex
-var cacheInstance *redis.Conn
+var cacheInstance *RedisConn
 
 type RedisConn struct {
 	pool      *redis.Pool
@@ -33,4 +34,50 @@ func (rds *RedisConn) Do(commandName string,
 		fmt.Printf("[redis] [info] [%dus]cmd=%s, err=%s, args=%v, reply=%s\n", (t2-t1)/1000, commandName, err, args, reply)
 	}
 	return reply, err
+}
+
+func (rds *RedisConn) ShowDebug(b bool) {
+	rds.showDebug = b
+}
+
+func InstanceCache() *RedisConn {
+	if cacheInstance != nil {
+		return cacheInstance
+	}
+	rdsLock.Lock()
+	defer rdsLock.Unlock()
+	if cacheInstance != nil {
+		return cacheInstance
+	}
+	return NewCache()
+}
+
+func NewCache() *RedisConn {
+	pool := redis.Pool{
+		Dial: func() (redis.Conn, error) {
+			c, err := redis.Dial("tcp", fmt.Sprintf("%s:%d", conf.RdsCache, conf.RdsCache.Port))
+			if err != nil {
+				log.Fatal("rdshelper.NewCache Dial error=", err)
+			}
+			return c, nil
+		},
+		TestOnBorrow: func(c redis.Conn, t time.Time) error {
+			if time.Since(t) < time.Minute {
+				return nil
+			}
+			_, err := c.Do("PING")
+			return err
+		},
+		MaxIdle:         10000,
+		MaxActive:       10000,
+		IdleTimeout:     0,
+		Wait:            false,
+		MaxConnLifetime: 0,
+	}
+	instance := &RedisConn{
+		pool: &pool,
+	}
+	cacheInstance = instance
+	instance.ShowDebug(true)
+	return instance
 }
