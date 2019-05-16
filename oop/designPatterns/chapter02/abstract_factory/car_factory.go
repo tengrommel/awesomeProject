@@ -2,7 +2,7 @@ package abstract_factory
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
+	"errors"
 )
 
 const (
