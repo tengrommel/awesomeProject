@@ -8,9 +8,13 @@ import (
 )
 
 type Sever struct {
-	Id int64 `json:"id"`
-	Address string `json:"address"`
-	Olist []string `json:"olist"`
+	CorpOrderId string `json:"corpOrderId"`
+	AccidentId string `json:"accidentId"`
+	AccidentSolutionType string `json:"accidentSolutionType"`
+	AmountInCent int `json:"amountInCent"`
+	RefundDishCount int `json:"refundDishCount"`
+	RefundToCompany int `json:"refundToCompany"`
+	RefundToUser int `json:"refundToUser"`
 }
 
 func main() {
@@ -20,10 +24,6 @@ func main() {
 	servers := []Sever{}
 	json.Unmarshal(stringBytes, &servers)
 	for i := range servers {
-		fmt.Println("Id:", servers[i].Id)
-		fmt.Println("Address:", servers[i].Address)
-		for j := range servers[i].Olist {
-			fmt.Println(servers[i].Olist[j])
-		}
+		fmt.Println(servers[i])
 	}
 }
