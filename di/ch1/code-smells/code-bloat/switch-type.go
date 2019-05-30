@@ -2,6 +2,8 @@ package code_bloat
 
 import "strconv"
 
+var StringList []string
+
 func AppendValue(buffer []byte, in interface{}) []byte {
 	var value []byte
 	// convert input to []byte
@@ -19,4 +21,13 @@ func AppendValue(buffer []byte, in interface{}) []byte {
 	}
 	buffer = append(buffer, value...)
 	return buffer
+}
+
+func MakeList()  {
+	StringList = append(StringList, "a")
+}
+
+func MakeListAgain()  {
+	MakeList()
+	StringList = append(StringList, "b")
 }
